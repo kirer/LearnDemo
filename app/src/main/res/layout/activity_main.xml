@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.kirer.rxjavalearn.MainViewModel" />
+
+        <variable
+            name="manager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager" />
+
+        <variable
+            name="adapter"
+            type="com.kirer.rxjavalearn.MyAdapter" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.kirer.widget.recyclerview.KListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{ adapter }"
+            app:layoutManager="@{ manager }"
+            app:loadingListener="@{ viewModel.listener }"
+            app:loadingMore="@{ viewModel.loadingMore }"
+            app:refreshing="@{ viewModel.refreshing }" />
+
+        <Button
+            android:id="@+id/stopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Stop"/>
+
+    </RelativeLayout>
+</layout>
+
