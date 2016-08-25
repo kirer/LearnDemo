@@ -4,7 +4,6 @@
 
     <data>
 
-
         <variable
             name="viewModel"
             type="com.kirer.rxjavalearn.MainViewModel" />
@@ -15,7 +14,7 @@
 
         <variable
             name="adapter"
-            type="com.kirer.rxjavalearn.MyAdapter" />
+            type="com.kirer.widget.recyclerview.BaseAdapter" />
     </data>
 
     <RelativeLayout
@@ -29,17 +28,12 @@
             android:layout_height="match_parent"
             app:adapter="@{ adapter }"
             app:layoutManager="@{ manager }"
+            app:loadMoreEnabled="@{ true }"
             app:loadingListener="@{ viewModel.listener }"
             app:loadingMore="@{ viewModel.loadingMore }"
-            app:refreshing="@{ viewModel.refreshing }" />
+            app:refreshing="@{ viewModel.refreshing }"
+            app:refreshingEnabled="@{ true }" />
 
-        <Button
-            android:id="@+id/stopBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="Stop"/>
 
     </RelativeLayout>
 </layout>

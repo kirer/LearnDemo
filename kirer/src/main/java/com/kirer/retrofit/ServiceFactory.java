@@ -56,14 +56,14 @@ public class ServiceFactory {
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(getOkHttpClient())
+//                .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit.create(serviceClass);
     }
 
-    private final static long DEFAULT_TIMEOUT = 10;
+    private final static long DEFAULT_TIMEOUT = 3;
 
     private OkHttpClient getOkHttpClient() {
         //定制OkHttp
@@ -72,21 +72,21 @@ public class ServiceFactory {
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        httpClientBuilder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request()
-                        .newBuilder()
-                        .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                        .addHeader("Accept-Encoding", "gzip, deflate")
-                        .addHeader("Connection", "keep-alive")
-                        .addHeader("Accept", "*/*")
-                        .addHeader("Cookie", "add cookies here")
-                        .addHeader("apikey", "d16b4f62bed881129499515e255cffef")
-                        .build();
-                return chain.proceed(request);
-            }
-        });
+//        httpClientBuilder.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request request = chain.request()
+//                        .newBuilder()
+//                        .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+//                        .addHeader("Accept-Encoding", "gzip, deflate")
+//                        .addHeader("Connection", "keep-alive")
+//                        .addHeader("Accept", "*/*")
+//                        .addHeader("Cookie", "add cookies here")
+//                        .addHeader("apikey", "d16b4f62bed881129499515e255cffef")
+//                        .build();
+//                return chain.proceed(request);
+//            }
+//        });
         //设置缓存
 //        File httpCacheDirectory = new File(FileUtils.getCacheDir(SolidApplication.getInstance()), "OkHttpCache");
 //        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));

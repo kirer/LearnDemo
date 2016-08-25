@@ -6,7 +6,7 @@ import com.kirer.retrofit.HttpResult;
 import java.util.List;
 
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -14,8 +14,10 @@ import rx.Observable;
  */
 public interface ArticlesService {
 
-    String BASE_URL = "http://api.kanzhihu.com/";
+    String BASE_URL = "http://gank.io/api/";
 
-    @GET("getposts")
-    Observable<HttpResult<List<Article>>> articles();
+    @GET("data/all/{page_size}/{page}")
+    Observable<HttpResult<List<Article>>> articles(
+            @Path("page_size") int page_size,
+            @Path("page") int page);
 }

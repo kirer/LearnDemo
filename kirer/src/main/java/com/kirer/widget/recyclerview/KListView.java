@@ -153,12 +153,17 @@ public class KListView extends FrameLayout implements SwipeRefreshLayout.OnRefre
         this.loadMoreEnabled = enabled;
     }
 
+    public void setRefreshingEnabled(boolean enabled) {
+        this.swipeView.setEnabled(enabled);
+    }
+
     public void setRefreshing(boolean refreshing) {
-        L.e("setRefreshing --> " + refreshing);
+        L.d("setRefreshing --> " + refreshing);
         this.swipeView.setRefreshing(refreshing);
     }
 
     public void setLoadingMore(boolean loadingMore) {
+        L.d("setLoadingMore --> " + loadingMore);
         isLoading = loadingMore;
         this.footerView.setVisibility(loadingMore ? VISIBLE : GONE);
     }

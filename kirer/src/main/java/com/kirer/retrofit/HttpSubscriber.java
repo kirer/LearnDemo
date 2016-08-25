@@ -1,12 +1,9 @@
 package com.kirer.retrofit;
 
-import android.text.TextUtils;
-import android.util.Log;
+import android.widget.Toast;
 
-
+import com.kirer.Kirer;
 import com.kirer.utils.L;
-
-import java.util.List;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
@@ -24,16 +21,16 @@ public abstract class HttpSubscriber<T> extends Subscriber<HttpResult<T>> {
     public void onError(Throwable e) {
         e.printStackTrace();
         if (e instanceof HttpException) {
-            Log.e("HttpSubscriber", "onError --> http exception " + e.getMessage());
-            // ToastUtils.getInstance().showToast(e.getMessage());
+            Toast.makeText(Kirer.getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
         }
         onFailed(e);
     }
 
     @Override
     public void onNext(HttpResult<T> t) {
-        if (TextUtils.isEmpty(t.error)) {
-            onSuccess(t.posts);
+        L.d("Http onNext --> error : " + t.error + " count : " + t.count + " result : " + t.results);
+        if (!t.error) {
+            onSuccess(t.results);
         } else
             onFailed(new Throwable("error=" + t.error));
     }

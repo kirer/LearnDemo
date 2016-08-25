@@ -1,5 +1,6 @@
 package com.kirer.rxjavalearn;
 
+
 import com.kirer.rxjavalearn.databinding.IDataBinding;
 import com.kirer.widget.recyclerview.BaseAdapter;
 
@@ -9,6 +10,7 @@ import com.kirer.widget.recyclerview.BaseAdapter;
  */
 public class MyAdapter extends BaseAdapter<Article> {
 
+
     @Override
     public int getLayoutId() {
         return R.layout.i_data;
@@ -17,7 +19,7 @@ public class MyAdapter extends BaseAdapter<Article> {
     @Override
     public void bind(BindingHolder holder, int position) {
         IDataBinding binding = (IDataBinding) holder.binding;
-        binding.setName(dataList.get(position).getName());
+        binding.setArticle(dataList.get(position));
     }
 
 }

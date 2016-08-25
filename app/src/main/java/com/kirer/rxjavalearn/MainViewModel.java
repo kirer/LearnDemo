@@ -1,7 +1,6 @@
 package com.kirer.rxjavalearn;
 
 import android.databinding.ObservableBoolean;
-import android.view.View;
 
 import com.kirer.model.BaseViewModel;
 import com.kirer.retrofit.HttpResult;
@@ -14,6 +13,7 @@ import com.kirer.widget.recyclerview.KListView;
 
 import java.util.List;
 
+
 /**
  * Created by xinwb on 2016/8/23.
  */
@@ -25,25 +25,20 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
 
     public MainViewModel(ActivityMainBinding binding) {
         super(binding);
-
-        binding.stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refreshing.set(false);
-            }
-        });
     }
 
 
     public final KListView.LoadingListener listener = new KListView.LoadingListener() {
         @Override
         public void onRefresh() {
+            refreshing.set(true);
             page = 1;
             getDataList(page);
         }
 
         @Override
         public void onLoadMore() {
+            loadingMore.set(true);
             getDataList(++page);
         }
     };
@@ -52,7 +47,7 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
         ServiceFactory
                 .getInstance()
                 .createService(ArticlesService.class)
-                .articles()
+                .articles(10, page)
                 .compose(TransformUtils.<HttpResult<List<Article>>>defaultSchedulers())
                 .subscribe(new HttpSubscriber<List<Article>>() {
                     @Override
@@ -74,6 +69,5 @@ public class MainViewModel extends BaseViewModel<ActivityMainBinding> {
                     }
                 });
     }
-
 
 }

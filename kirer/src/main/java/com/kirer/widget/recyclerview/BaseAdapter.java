@@ -29,6 +29,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Bi
         notifyDataSetChanged();
     }
 
+    public List<T> getDataList() {
+        if (this.dataList == null) {
+            this.dataList = new ArrayList<>();
+        }
+
+        return this.dataList;
+    }
+
     public void addDataList(List<T> dataList) {
         if (this.dataList == null) {
             this.dataList = new ArrayList<>();
@@ -39,12 +47,27 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Bi
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new BindingHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutId(), null));
+        return new BindingHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutId(), parent, false));
     }
 
     @Override
     public void onBindViewHolder(BindingHolder holder, final int position) {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(view, position);
+                    return;
+                }
+                onItemClick(view, position);
+            }
+        });
         bind(holder, position);
+    }
+
+    public void onItemClick(View view, int position) {
+
     }
 
     @Override
@@ -55,6 +78,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Bi
     public abstract int getLayoutId();
 
     public abstract void bind(BindingHolder holder, int position);
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public class BindingHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
 
